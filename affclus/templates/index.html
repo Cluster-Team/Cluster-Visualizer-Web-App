@@ -1,0 +1,763 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<meta charset="utf-8">
+	<title>Wizard V1</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/bootstrap-datepicker.css' %}">
+	<link rel="stylesheet" href="{% static '/css/animate.min.css' %}">
+	<link rel="stylesheet" href="{% static '/css/fontawesome-all.css' %}">
+	<link rel="stylesheet" href="{% static '/css/style.css' %}">
+	
+</head>
+
+<body class="dark-version">
+	
+	<div class="wrapper">
+		<div class="steps-area steps-area-fixed">
+			<div class="image-holder">
+				<img src="{% static '/img/side-img.jpg' %}" alt="">
+			</div>
+			<div class="steps clearfix">
+				<ul class="tablist multisteps-form__progress">
+					<li class="multisteps-form__progress-btn js-active current">
+						<span>1</span>
+					</li>
+					<li class="multisteps-form__progress-btn">
+						<span>2</span>
+					</li>
+					<li class="multisteps-form__progress-btn">
+						<span>3</span>
+					</li>
+					<li class="multisteps-form__progress-btn">
+						<span>4</span>
+					</li>
+					<li class="multisteps-form__progress-btn last">
+						<span>5</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<form class="multisteps-form__form" action="#" id="wizard" method="POST">
+			<div class="form-area position-relative">
+				<!-- div 1 -->
+				<div class="multisteps-form__panel js-active" data-animation="slideHorz">
+					<div class="wizard-forms">
+						<div class="inner pb-100 clearfix">
+							<div class="form-content pera-content">
+								<div class="step-inner-content">
+									<span class="step-no">Step 1</span>
+									<h2>What kind of Clustering do you want to Visualize?</h2>
+									
+									<p><a href="https://clustering-visualizer.blogspot.com/">Find our blog here with regular updates on our project and information on our workflow.</a></p>
+									<div class="step-box">
+										<div class="row" id="radio-buttons-container">
+											
+											<div class="col-md-4">
+												<label class="step-box-content bg-white text-center relative-position active">
+													<span class="step-box-icon">
+														<img src="{% static '/img/d1.png' %}" alt="">
+													</span>
+													<span style="color: black;" class="step-box-text">
+														Affinity Clustering
+													</span>
+													<span class="service-check-option">
+														<span><input type="radio" class="clustering_algo_type" name="service_name" value="Affinity Clustering" checked></span>
+													</span>
+												</label>
+											</div>
+											<div class="col-md-4">
+												<label class="step-box-content bg-white text-center relative-position">
+													<span class="step-box-icon">
+														<img src="{% static '/img/d2.png' %}" alt="">
+													</span>
+													<span style="color: black;" class="step-box-text">
+														K Means
+													</span>
+													<span class="service-check-option">
+														<span><input type="radio" class="clustering_algo_type" name="service_name" value="K Means"></span>
+													</span>
+												</label>
+											</div>
+											<div class="col-md-4">
+												<label class="step-box-content bg-white text-center relative-position">
+													<span class="step-box-icon">
+														<img src="{% static '/img/d3.png' %}" alt="">
+													</span>
+													<span style="color: black;" class="step-box-text">
+														Spectral Clustering
+													</span>
+													<span class="service-check-option">
+														<span><input type="radio" class="clustering_algo_type" name="service_name" value="DBSCAN"></span>
+													</span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.inner -->
+						<div class="actions">
+							<ul>
+								<li class="disable" aria-disabled="true"><span class="js-btn-next" title="NEXT">Backward <i class="fa fa-arrow-right"></i></span></li>
+								<li><span class="js-btn-next" title="NEXT">NEXT <i class="fa fa-arrow-right"></i></span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- div 2 -->
+				<div class="multisteps-form__panel" data-animation="slideHorz">
+					<div class="wizard-forms">
+						<div class="inner pb-100 clearfix">
+							<div class="form-content pera-content">
+								<div class="step-inner-content">
+									<span class="step-no bottom-line">Step 2</span>
+									<div class="step-progress float-right">
+										<span>2 of 5 completed</span>
+										<div class="step-progress-bar">
+											<div class="progress">
+												<div class="progress-bar"></div>
+											</div>
+										</div>
+									</div>
+
+									<h2>Affinity Propagation</h2>
+									<p style="opacity: 0;">Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.</p>
+									
+									<p>Please enter the size of the matrix.</p>
+
+									<br>
+
+									<form method="post">
+										{% csrf_token %}
+										<input style="color: white" type="number" id="m" name="m" placeholder="rows">
+										<input style="color: white" type="number" id="n" name="n" placeholder="columns">
+										<input style="color: white" type="submit" value="Create Matrix" onclick="createMatrix(); return false;">
+										<div class="form-inner-area">
+											<!-- <input style="color: white" type="text" id = "damping" name="full_name"  placeholder="Damping Factor" > -->
+											<input style="color: white" type="number" id = "preference" name="email"  placeholder="Preference Value" >
+											<input style="color: white" type="number" id = "iteration" name="phone" placeholder="Maximum Number of Iterations">
+										</div>
+
+									</form>
+									
+
+
+									<div id="matrix"></div>
+									
+									<script>
+										function createMatrix() {
+											var m = parseInt(document.getElementById("m").value);
+											var n = parseInt(document.getElementById("n").value);
+											var matrixHTML = "<br><p>Please enter the elements of the matrix.</p><table>";
+											for (var i = 0; i < m; i++) {
+												matrixHTML += "<tr>";
+												for (var j = 0; j < n; j++) {
+													matrixHTML += "<td><input style='color: white' type='text' id='cell" + i + j + "'></td>";
+												}
+												matrixHTML += "</tr>";
+											}
+											matrixHTML += "</table><br>";
+											matrixHTML += "<input style='color: white' type='submit' value='Submit' onclick='submitMatrix(); return false;'>";
+											document.getElementById("matrix").innerHTML = matrixHTML;
+
+											// Add a submit button after the matrix is created
+											// var submitButton = "<input style='color: white' type='submit' value='Submit' onclick='submitMatrix(); return false;'>";
+											// document.getElementById("matrix").insertAdjacentHTML("afterend", submitButton);
+										}
+
+										function submitMatrix() {
+											var m = parseInt(document.getElementById("m").value);
+											var n = parseInt(document.getElementById("n").value);
+											var iteration = parseInt(document.getElementById("iteration").value);
+											var preference = parseInt(document.getElementById("preference").value);
+											// var damping = parseInt(document.getElementById("damping").value);
+
+											var matrix = [];
+
+											for (var i = 0; i < m; i++) {
+												matrix[i] = [];
+												for (var j = 0; j < n; j++) {
+													matrix[i][j] = document.getElementById("cell" + i + j).value;
+												}
+											} 
+											var res = 98
+												$.ajax({
+													url: "/submit_matrix/",
+													method: "POST",
+													data: {
+														matrix: matrix,
+														m : m,
+														n : n,
+														// damping : damping,
+														iteration : iteration,
+														preference : preference,
+														csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+													},
+													success: function(response) {
+														$('#graph_imp').html(response.target_plot);
+														console.log(response); // Do something with the response from the server
+													},
+													error: function(xhr, status, error) {
+														console.log(error); // Handle any errors that occur during the request
+													}
+												});
+											
+											// document.getElementById("graph_imp").innerHTML = res
+											console.log(matrix); // Do something with the matrix data here
+										}
+									</script>
+
+									<form method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+									{% csrf_token %}
+									<div class="form-group">
+										<label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+										<div class="col-md-8">
+											<input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+										</div>                    
+									</div>
+									<div class="form-group">                    
+										<div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+											<button onclick="upload_file(); return false;" class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+										</div> 
+									</div>
+									</form>
+									<script>
+										function upload_file() {
+											var iteration = parseInt(document.getElementById("iteration").value);
+											var preference = parseInt(document.getElementById("preference").value);
+											// var damping = parseInt(document.getElementById("damping").value);
+
+											var formData = new FormData();
+   											formData.append('csv_file', $('#csv_file')[0].files[0]);
+											formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+											formData.append('iteration',iteration);
+											formData.append('preference',preference);
+											// formData.append('damping',damping);
+											
+											var res = 98
+												$.ajax({
+													url: "/upload/",
+													method: "POST",
+													data: formData,
+													processData: false,
+        											contentType: false,
+													success: function(response) {
+														$('#graph_imp').html(response.target_plot);
+														console.log(response); // Do something with the response from the server
+													},
+													error: function(xhr, status, error) {
+														console.log(error); // Handle any errors that occur during the request
+													}
+												});
+											
+											console.log(matrix); // Do something with the matrix data here
+										}
+									</script>
+									
+									
+								</div>
+							</div>
+						</div>
+						<!-- /.inner -->
+						<div class="actions">
+							<ul>
+								<li><span class="js-btn-prev" title="BACK"><i class="fa fa-arrow-left"></i> BACK </span></li>
+								<li><span class="js-btn-next" title="NEXT">NEXT <i class="fa fa-arrow-right"></i></span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+				
+				<!-- div 3 -->
+				<div class="multisteps-form__panel" data-animation="slideHorz">
+					<div class="wizard-forms">
+						<div class="inner pb-100 clearfix">
+							<div class="form-content pera-content">
+								<div class="step-inner-content">
+									<span class="step-no bottom-line">Step 3</span>
+									<div class="step-progress float-right">
+										<span>3 of 5 completed</span>
+										<div class="step-progress-bar">
+											<div class="progress">
+												<div class="progress-bar" style="width:40%"></div>
+											</div>
+										</div>
+									</div>
+									<h2>K Means</h2>
+									<p style="opacity: 0;">Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.</p>
+									
+									<p>Please enter the size of the matrix.</p>
+
+									<br>
+
+									<form method="post">
+										{% csrf_token %}
+										<input style="color: white" type="number" id="m2" name="m" placeholder="rows">
+										<input style="color: white" type="number" id="n2" name="n" placeholder="columns">
+										<input style="color: white" type="submit" value="Create Matrix" onclick="createMatrix2(); return false;">
+									</form>
+									
+									<div class="form-inner-area">
+										<input style="color: white" type="number" id = "clusters2"  placeholder="Number of Clusters" >
+										<input style="color: white" type="number" id = "iteration2"  placeholder="Maximum Number of Iterations">
+									</div>
+
+									<div id="matrix2"></div>
+									
+									<script>
+										function createMatrix2() {
+											
+											var m = parseInt(document.getElementById("m2").value);
+											var n = parseInt(document.getElementById("n2").value);
+											var matrixHTML = "<br><p>Please enter the elements of the matrix.</p><table>";
+											for (var i = 0; i < m; i++) {
+												matrixHTML += "<tr>";
+												for (var j = 0; j < n; j++) {
+													matrixHTML += "<td><input style='color: white' type='text' id='cell" + i + j + "'></td>";
+												}
+												matrixHTML += "</tr>";
+											}
+											matrixHTML += "</table><br>";
+											matrixHTML += "<input style='color: white' type='submit' value='Submit' onclick='submitMatrix2(); return false;'>";
+											document.getElementById("matrix2").innerHTML = matrixHTML;
+
+											// Add a submit button after the matrix is created
+											// var submitButton = "<input style='color: white' type='submit' value='Submit' onclick='submitMatrix(); return false;'>";
+											// document.getElementById("matrix").insertAdjacentHTML("afterend", submitButton);
+										}
+
+										function submitMatrix2() {
+											var m = parseInt(document.getElementById("m2").value);
+											var n = parseInt(document.getElementById("n2").value);
+											var cluster = parseInt(document.getElementById("clusters2").value);
+											var iteration = parseInt(document.getElementById("iteration2").value);
+
+											// var iteration = parseInt(document.getElementById("iteration").value);
+											// var perference = parseFloat(document.getElementById("preference").value);
+											// var damping = parseFloat(document.getElementById("damping").value);
+
+											var matrix = [];
+
+											for (var i = 0; i < m; i++) {
+												matrix[i] = [];
+												for (var j = 0; j < n; j++) {
+													matrix[i][j] = document.getElementById("cell" + i + j).value;
+												}
+											}
+											var res = 98
+												$.ajax({
+													url: "/submit_matrix2/",
+													method: "POST",
+													data: {
+														matrix: matrix,
+														m : m,
+														n : n,
+														cluster : cluster,
+														iteration : iteration,
+														// damping : damping,
+														// iteration : iteration,
+														// preference : preference,
+														csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+													},
+													success: function(response) {
+														$('#graph_imp').html(response.target_plot);
+														console.log(response); // Do something with the response from the server
+													},
+													error: function(xhr, status, error) {
+														console.log(error); // Handle any errors that occur during the request
+													}
+												});
+											
+											// document.getElementById("graph_imp").innerHTML = res
+											console.log(matrix); // Do something with the matrix data here
+										}
+									</script>
+									
+									<form method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+										{% csrf_token %}
+										<div class="form-group">
+											<label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+											<div class="col-md-8">
+												<input type="file" name="csv_file2" id="csv_file2" required="True" class="form-control">
+											</div>                    
+										</div>
+										<div class="form-group">                    
+											<div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+												<button onclick="upload_file2(); return false;" class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+											</div> 
+										</div>
+									</form>
+										<script>
+											function upload_file2() {
+												var cluster = parseInt(document.getElementById("clusters2").value);
+												var iteration = parseInt(document.getElementById("iteration2").value);
+
+												var formData = new FormData();
+												   formData.append('csv_file2', $('#csv_file2')[0].files[0]);
+												   formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+												   formData.append('iteration',iteration);
+												   formData.append('cluster',cluster);
+												
+												var res = 98
+													$.ajax({
+														url: "/upload2/",
+														method: "POST",
+														data: formData,
+														processData: false,
+														contentType: false,
+														success: function(response) {
+															$('#graph_imp').html(response.target_plot);
+															console.log(response); // Do something with the response from the server
+														},
+														error: function(xhr, status, error) {
+															console.log(error); // Handle any errors that occur during the request
+														}
+													});
+												
+												console.log(matrix); // Do something with the matrix data here
+											}
+										</script>
+										
+									
+									<!-- <div class="services-select-option">
+										<ul>
+											<li class="bg-white active"><label>Web Design <input type="radio" name="web_service" value="Web Design" checked></label></li>
+											<li class="bg-white"><label>Web Development <input type="radio" name="web_service" value="Web Development"></label></li>
+											<li class="bg-white"><label>Graphics Design <input type="radio" name="web_service" value="Graphics Design"></label></li>
+											<li class="bg-white"><label>SEO <input type="radio" name="web_service" value="SEO"></label></li>
+										</ul>
+									</div>
+									<div class="language-select">
+										<p>I want to browse projects in the following languages: </p>
+										<select name="languages">
+											<option>English</option>
+											<option>Arabic</option>
+											<option>Spanish</option>
+											<option>French</option>
+										</select>
+									</div> -->
+									<!-- <div class="comment-box">
+										<p><i class="fas fa-comments"></i> Write Somthing note</p>
+										<textarea name="full_comments" placeholder="Write here"></textarea>
+									</div> -->
+								</div>
+							</div>
+						</div>
+						<!-- ./inner -->
+						<div class="actions">
+							<ul>
+								<li><span class="js-btn-prev" title="BACK"><i class="fa fa-arrow-left"></i> BACK </span></li>
+								<li><span class="js-btn-next" title="NEXT">NEXT <i class="fa fa-arrow-right"></i></span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- div 4 -->
+				<div class="multisteps-form__panel" data-animation="slideHorz">
+					<div class="wizard-forms">
+						<div class="inner pb-100 clearfix">
+							<div class="form-content pera-content">
+								<div class="step-inner-content">
+									<span class="step-no bottom-line">Step 4</span>
+									<div class="step-progress float-right">
+										<span>4 of 5 completed</span>
+										<div class="step-progress-bar">
+											<div class="progress">
+												<div class="progress-bar" style="width:70%"></div>
+											</div>
+										</div>
+									</div>
+									<h2>Spectral Clustering</h2>
+									<p style="opacity: 0;">Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.</p>
+									
+									<p>Please enter the size of the matrix.</p>
+
+									<br>
+
+									<form method="post">
+										{% csrf_token %}
+										<input style="color: white" type="number" id="m3" name="m" placeholder="rows">
+										<input style="color: white" type="number" id="n3" name="n" placeholder="columns">
+										<input style="color: white" type="submit" value="Create Matrix" onclick="createMatrix3(); return false;">
+									</form>
+									
+									<div class="form-inner-area">
+										<input style="color: white" type="number" id = "Epsilon3"  placeholder="Epsilon" >
+										<input style="color: white" type="number" id = "samples3"  placeholder="No. of cluster">
+									</div>
+
+									<div id="matrix3"></div>
+									
+									<script>
+										function createMatrix3() {
+											
+											var m = parseInt(document.getElementById("m3").value);
+											var n = parseInt(document.getElementById("n3").value);
+											var matrixHTML = "<br><p>Please enter the elements of the matrix.</p><table>";
+											for (var i = 0; i < m; i++) {
+												matrixHTML += "<tr>";
+												for (var j = 0; j < n; j++) {
+													matrixHTML += "<td><input style='color: white' type='text' id='cell" + i + j + "'></td>";
+												}
+												matrixHTML += "</tr>";
+											}
+											matrixHTML += "</table><br>";
+											matrixHTML += "<input style='color: white' type='submit' value='Submit' onclick='submitMatrix3(); return false;'>";
+											document.getElementById("matrix3").innerHTML = matrixHTML;
+
+											// Add a submit button after the matrix is created
+											// var submitButton = "<input style='color: white' type='submit' value='Submit' onclick='submitMatrix(); return false;'>";
+											// document.getElementById("matrix").insertAdjacentHTML("afterend", submitButton);
+										}
+
+										function submitMatrix3() {
+											var m = parseInt(document.getElementById("m3").value);
+											var n = parseInt(document.getElementById("n3").value);
+											var epsilon = parseInt(document.getElementById("Epsilon3").value);
+											var cluster = parseInt(document.getElementById("samples3").value);
+
+											var matrix = [];
+
+											for (var i = 0; i < m; i++) {
+												matrix[i] = [];
+												for (var j = 0; j < n; j++) {
+													matrix[i][j] = document.getElementById("cell" + i + j).value;
+												}
+											}
+											var res = 98
+												$.ajax({
+													url: "/submit_matrix3/",
+													method: "POST",
+													data: {
+														matrix: matrix,
+														m : m,
+														n : n,
+														epsilon : epsilon,
+														cluster : cluster,
+														// damping : damping,
+														// iteration : iteration,
+														// preference : preference,
+														csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+													},
+													success: function(response) {
+														$('#graph_imp').html(response.target_plot);
+														console.log(response); // Do something with the response from the server
+													},
+													error: function(xhr, status, error) {
+														console.log(error); // Handle any errors that occur during the request
+													}
+												});
+											
+											// document.getElementById("graph_imp").innerHTML = res
+											console.log(matrix); // Do something with the matrix data here
+										}
+									</script>
+									
+									<form method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+										{% csrf_token %}
+										<div class="form-group">
+											<label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+											<div class="col-md-8">
+												<input type="file" name="csv_file3" id="csv_file3" required="True" class="form-control">
+											</div>                    
+										</div>
+										<div class="form-group">                    
+											<div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+												<button onclick="upload_file3(); return false;" class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+											</div> 
+										</div>
+									</form>
+										<script>
+											function upload_file3() {
+												var epsilon = parseInt(document.getElementById("Epsilon3").value);
+												var cluster = parseInt(document.getElementById("samples3").value);
+
+												var formData = new FormData();
+												   formData.append('csv_file3', $('#csv_file3')[0].files[0]);
+												   formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+												   formData.append('epsilon',epsilon);
+												   formData.append('cluster',cluster);
+												
+												var res = 98
+													$.ajax({
+														url: "/upload3/",
+														method: "POST",
+														data: formData,
+														processData: false,
+														contentType: false,
+														success: function(response) {
+															$('#graph_imp').html(response.target_plot);
+															console.log(response); // Do something with the response from the server
+														},
+														error: function(xhr, status, error) {
+															console.log(error); // Handle any errors that occur during the request
+														}
+													});
+												
+												console.log(matrix); // Do something with the matrix data here
+											}
+										</script>
+									
+									<!-- <div class="step-content-area">
+										<div class="budget-area">
+											<p><i class="fas fa-dollar-sign"></i> Budget</p>
+											<select name="budget">
+												<option>$390 - $600</option>
+												<option>$390 - $600</option>
+												<option>$390 - $600</option>
+												<option>$390 - $600</option>
+												<option>$390 - $600</option>
+											</select>
+										</div>
+										<div class="budget-area">
+											<p><i class="fas fa-comments"></i> Required Support</p>
+											<select name="support_period">
+												<option>2 to 6 month</option>
+												<option>2 to 6 month</option>
+												<option>2 to 6 month</option>
+												<option>2 to 6 month</option>
+												<option>2 to 6 month</option>
+											</select>
+										</div>
+										<div class="budget-area">
+											<p>Optimization and Accessibility</p>
+											<div class="opti-list">
+												<ul class="d-flex">
+													<li class="bg-white active"><input type="checkbox" name="code_opti1" value="Semantic coding" checked>Semantic coding</li>
+													<li class="bg-white"><input type="checkbox" name="code_opti2" value="Mobile APP">Mobile APP</li>
+													<li class="bg-white"><input type="checkbox" name="code_opti3" value="Mobile Design">Mobile Design</li>
+												</ul>
+											</div>
+										</div>
+										<div class="comment-box">
+											<p><i class="fas fa-comments"></i> Write Somthing note</p>
+											<textarea name="comments-note" placeholder="Your Content Here"></textarea>
+										</div>
+									</div> -->
+								</div>
+							</div>
+						</div>
+						<!-- /.inner -->
+						<div class="actions">
+							<ul>
+								<li><span class="js-btn-prev" title="BACK"><i class="fa fa-arrow-left"></i> BACK </span></li>
+								<!-- <button onclick="redirectToNewPage()"> -->
+<li><span class="js-btn-next" title="NEXT">NEXT <i class="fa fa-arrow-right"></i></span></li>
+<!-- </button> -->
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- div 5 -->
+				<div class="multisteps-form__panel" data-animation="slideHorz">
+					<div class="wizard-forms">
+						<div class="inner pb-100 clearfix">
+							<div class="form-content pera-content">
+								<div class="step-inner-content">
+									<span class="step-no bottom-line">Step 5</span>
+									<div class="step-progress float-right">
+										<span>5 of 5 completed</span>
+										<div class="step-progress-bar">
+											<div class="progress">
+												<div class="progress-bar" style="width:100%"></div>
+											</div>
+										</div>
+									</div>
+									<h2>Clusters</h2>
+									<p style="opacity: 0;">Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.</p>
+									<div class="step-content-field">
+										<!-- <div class="date-picker date datepicker">
+											<input type="text" name="date" class="form-control">
+											 <div class="input-group-append"><span>ADD TIME</span></div>
+										</div>
+										<div class="plan-area">
+											<div class="plan-icon-text text-center active">
+												<div class="plan-icon">
+													<i class="fas fa-chess-queen"></i>
+												</div>
+												<div class="plan-text">
+													<h3>Unlimited Plan</h3>
+													<p>Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, dicit viderer evertitur</p>
+													<input type="radio" name="your_plan" value="Unlimited Plan" checked="">
+												</div>
+											</div>
+											<div class="plan-icon-text text-center">
+												<div class="plan-icon">
+													<i class="fas fa-cubes"></i>
+												</div>
+												<div class="plan-text">
+													<h3>Limited Plan</h3>
+													<p>Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, dicit viderer evertitur</p>
+													<input type="radio" name="your_plan" value="Unlimited Plan">
+												</div>
+											</div>
+										</div>
+										<div class="budget-area">
+											<p>Optimization and Accessibility</p>
+											<div class="opti-list">
+												<ul class="d-flex">
+													<li class="bg-white active"><input type="checkbox" name="code_opti1" value="Semantic coding" checked>Semantic coding</li>
+													<li class="bg-white"><input type="checkbox" name="code_opti2" value="Mobile APP">Mobile APP</li>
+													<li class="bg-white"><input type="checkbox" name="code_opti3" value="Mobile Design">Mobile Design</li>
+												</ul>
+											</div>
+										</div> -->
+										<div id="graph_imp">
+										{{target_plot|safe}}
+										</div>
+										<!-- <div class="comment-box">
+											<textarea name="extra-message" placeholder="Some Note"></textarea>
+										</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.inner -->
+						<div class="actions">
+							<ul>
+								<li><span class="js-btn-prev" title="BACK"><i class="fa fa-arrow-left"></i> BACK </span></li>
+								<!-- <li class="disable" aria-disabled="true"><button  type="submit" title="NEXT">SUBMIT <i class="fa fa-arrow-right"></i></button></li> -->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="{% static '/js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static '/js/jquery.validate.min.js' %}"></script>
+	<script src="{% static '/js/bootstrap-datepicker.min.js' %}"></script>
+	<script src="{% static '/js/bootstrap.min.js' %}"></script>
+	<script src="{% static '/js/main.js' %}"></script>
+	<script src="{% static '/js/switch.js' %}"></script>
+	<script>
+		$("#files").change(function() {
+			filename = this.files[0].name
+			// console.log(filename);
+		});
+
+		function UploadFile() {
+			var reader = new FileReader();
+			var file = document.getElementById('attach').files[0];
+			reader.onload = function() {
+				document.getElementById('fileContent').value = reader.result;
+				document.getElementById('filename').value = file.name;
+				document.getElementById('wizard').submit();
+			}
+			reader.readAsDataURL(file);
+		}
+		function redirectToNewPage() {
+			window.location.href = "{% url 'home' %}";
+		}
+		
+	</script>
+</body>
+
+
+</html>

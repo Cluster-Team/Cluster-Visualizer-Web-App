@@ -85,3 +85,9 @@ local_settings.py
 
 .env
 db.sqlite3
+
+
+# ignoring my world and pll folder
+
+myworld/
+pll/
